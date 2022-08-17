@@ -17,5 +17,7 @@ func InitRouter() *gin.Engine {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.GET("/ping", api.Ping)
+	r.GET("/tags", api.GetTags)
+	r.POST("/tags", api.AddTag)
 	return r
 }
