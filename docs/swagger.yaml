@@ -1,0 +1,10 @@
+info:
+  contact: {}
+paths:
+  /ping:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: Ping the server
+swagger: "2.0"
