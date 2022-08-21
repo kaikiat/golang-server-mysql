@@ -3,10 +3,12 @@ package api
 import (
 	"net/http"
 
+	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/kaikiat/golang-server-mysql-template/pkg/app"
 	"github.com/kaikiat/golang-server-mysql-template/pkg/e"
 	"github.com/kaikiat/golang-server-mysql-template/service/tag_service"
+	"github.com/unknwon/com"
 )
 
 type AddTagForm struct {
@@ -20,7 +22,7 @@ type AddTagForm struct {
 // @Param created_by body string false "CreatedBy"
 // @Success 200 {object} app.Response
 // @Failure 500 {object} app.Response
-// @Router /api/v1/tags [post]
+// @Router /tags [post]
 func AddTag(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
@@ -61,7 +63,7 @@ func AddTag(c *gin.Context) {
 // @Param name query string false "Name"
 // @Success 200 {object} app.Response
 // @Failure 500 {object} app.Response
-// @Router /api/v1/tags [get]
+// @Router /tags [get]
 func GetTags(c *gin.Context) {
 	appG := app.Gin{C: c}
 	name := c.Query("name")
@@ -84,4 +86,42 @@ func GetTags(c *gin.Context) {
 		"lists": tags,
 		"total": count,
 	})
+}
+
+// @Summary Delete article tag
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /tags/{id} [delete]
+func DeleteTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	valid := validation.Validation{}
+	id := com.StrTo(c.Param("id")).MustInt()
+
+	valid.Min(id, 1, "id").Message("ID must be greater than 0")
+
+	if valid.HasErrors() {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	tagService := tag_service.Tag{ID: id}
+	exists, err := tagService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR, nil)
+		return
+	}
+
+	if err := tagService.Delete(); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }

@@ -7,8 +7,9 @@
 4. Refer to this [https://dev.mysql.com/downloads/file/?id=512619](https://dev.mysql.com/downloads/file/?id=512619) to download MySql.
 
 ## Getting Started
-1. Run `go mod init`
-2. Run `nodemon --exec go run main.go --signal SIGTERM`
+1. Run `go mod init`.
+2. Run `nodemon --exec go run main.go --signal SIGTERM`.
+3. Go to `http://localhost:8000/swagger/index.html` for api documentation.
 
 ## References
 1. Gin Template [https://github.com/eddycjy/go-gin-example](https://github.com/eddycjy/go-gin-example).

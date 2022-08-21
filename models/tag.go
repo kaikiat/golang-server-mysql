@@ -64,3 +64,12 @@ func GetTagTotal(maps interface{}) (int, error) {
 
 	return count, nil
 }
+
+// DeleteTag delete a tag
+func DeleteTag(id int) error {
+	if err := db.Where("id = ?", id).Delete(&Tag{}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

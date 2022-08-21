@@ -23,5 +23,4 @@ func (g *Gin) Response(httpCode, errCode int, data interface{}) {
 		Msg:  e.GetMsg(errCode),
 		Data: data,
 	})
-	return
 }

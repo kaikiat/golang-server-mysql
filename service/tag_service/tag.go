@@ -42,3 +42,11 @@ func (t *Tag) getMaps() map[string]interface{} {
 
 	return maps
 }
+
+func (t *Tag) ExistByID() (bool, error) {
+	return models.ExistTagByID(t.ID)
+}
+
+func (t *Tag) Delete() error {
+	return models.DeleteTag(t.ID)
+}

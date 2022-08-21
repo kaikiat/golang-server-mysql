@@ -10,6 +10,7 @@ import (
 )
 
 // BindAndValid binds and validates data
+// Question : why not *form
 func BindAndValid(c *gin.Context, form interface{}) (int, int) {
 	err := c.Bind(form)
 	if err != nil {

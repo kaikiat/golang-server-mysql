@@ -19,5 +19,6 @@ func InitRouter() *gin.Engine {
 	r.GET("/ping", api.Ping)
 	r.GET("/tags", api.GetTags)
 	r.POST("/tags", api.AddTag)
+	r.DELETE("/tags/:id", api.DeleteTag)
 	return r
 }
