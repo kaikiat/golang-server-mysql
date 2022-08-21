@@ -10,8 +10,8 @@ import (
 )
 
 type AddTagForm struct {
-	Name      string `form:"name" valid:"Required;MaxSize(100)"`
-	CreatedBy string `form:"created_by" valid:"Required;MaxSize(100)"`
+	Name      string `json:"name" valid:"Required;MaxSize(100)"`
+	CreatedBy string `json:"created_by" valid:"Required;MaxSize(100)"`
 }
 
 // @Summary Add article tag
